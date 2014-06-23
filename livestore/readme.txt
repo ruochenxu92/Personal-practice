@@ -1,13 +1,13 @@
-1Â°Â¢Ï€âˆÎ©Â®Ã¸â„¢âˆ‘Â¢Âªâˆ‘Ã¦â‰¥
-	1.1 ÂµÂºÂ»ÃÃ¸â„¢âˆ‘Â¢âˆÂ¸
-		mysqlÂ«Ëâˆ‚Ã˜
-		c3p0Â¡Â¨Î©â€â‰¥Ã¿
-		dbutilsÃ¸â„¢âˆ‘Â¢âˆÂ¸
-		beanutilsÃ¸â„¢âˆ‘Â¢âˆÂ¸
-		jstlÃ¸â„¢âˆ‘Â¢âˆÂ¸
-		log4jÃ¸â„¢âˆ‘Â¢âˆÂ¸
+1¡¢¹°½¨¿ª·¢»·¾³
+	1.1 µ¼Èë¿ª·¢°ü
+		mysqlÇı¶¯
+		c3p0Á¬½Ó³Ø
+		dbutils¿ª·¢°ü
+		beanutils¿ª·¢°ü
+		jstl¿ª·¢°ü
+		log4j¿ª·¢°ü
 	
-	1.2 Â¥Â¥Î©Â®â‰¥Ãƒâ€“ÃšâˆÂ¸
+	1.2 ´´½¨³ÌĞò°ü
 		domain
 		dao
 		dao.impl
@@ -17,27 +17,27 @@
 		web.client
 		utils
 		
-		webroot\manager  Â±Â£Â¥ÃŠâˆ«Ã›ÃƒÂ®Å“â€¡Ï€Ã¿ÂµÆ’jsp
-		webroot\client   Â±Â£Â¥ÃŠÂ«âˆÃƒÂ®Å“â€¡Ï€Ã¿ÂµÆ’jsp
-		webroot\images   Â±Â£Â¥ÃŠÃ•Â¯â€™Ã¦Ã•Âºâˆ†Â¨
+		webroot\manager  ±£´æºóÌ¨Ïà¹ØµÄjsp
+		webroot\client   ±£´æÇ°Ì¨Ïà¹ØµÄjsp
+		webroot\images   ±£´æÍøÕ¾Í¼Æ¬
 		
-		Â«âˆÃƒÂ®âˆ‘Ã·Ã·Â°Â£âˆ«
+		Ç°Ì¨·ÖÖ¡£º
 		index.jsp--client--head.jsp
 				         --body.jsp
-		âˆ«Ã›ÃƒÂ®âˆ‘Ã·Ã·Â°Â£âˆ«
+		ºóÌ¨·ÖÖ¡£º
 		manager.jsp--manager--head.jsp
 		                    --left.jsp
 		                    --body.jsp
-    1.3 Â¥Â¥Î©Â®Ã¸â€š
+    1.3 ´´½¨¿â
     	create database bookstore;
     
-    1.4 â€“Â¥Ã•Â¯â€™Ã¦ÂµÆ’â€œÂªâ€“Â©â‰¥Â£â€âˆšÏ€Â§Ã¦ï¬‚Â¿â€¡
+    1.4 Ğ´ÍøÕ¾µÄÒ»Ğ©³£ÓÃ¹¤¾ßÀà
     	CharacterEncoding
     	HtmlFilter
     	JdbcUtils
     	DaoFactory
 
-2Â°Â£âˆ‘Ã·Â¿â€¡Æ’Â£Ã¸Ãˆ
+2¡£·ÖÀàÄ£¿é
 	create table category
 	(
 		id varchar(40) primary key,
@@ -45,7 +45,7 @@
 		description varchar(255)
 	);	
 	
-3Â°Â£Ã•ÂºÂ ÃˆÆ’Â£Ã¸Ãˆ	
+3¡£Í¼ÊéÄ£¿é	
 	create table book
 	(
 		id varchar(40) primary key,
@@ -59,7 +59,7 @@
 		
 	);	
 	
-4.â€âˆšÂªÃŸÂ£âˆ«
+4.ÓÃ»§£º
 	create table user
 	(
 		id varchar(40) primary key,
@@ -71,7 +71,7 @@
 		email varchar(40) not null
 	);
 	
-5\âˆ‚Â©Âµâ€¢
+5\¶©µ¥
 	
 	create table orders
 	(

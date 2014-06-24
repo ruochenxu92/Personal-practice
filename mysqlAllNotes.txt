@@ -1,0 +1,323 @@
+sql: structured query language(结构化查询语言)
+
+用户名和密码：root
+
+
+创建一个名称为mydb1的数据库。
+create database mydb1;
+
+查看所有数据库
+show databases;
+
+创建一个使用utf-8字符集的mydb2数据库。
+create database mydb2 character set utf8;
+
+创建一个使用utf-8字符集，并带校对规则的mydb3数据库。
+create database mydb3 character set utf8 collate utf8_general_ci;
+
+显示库的创建信息
+show create database mydb3;
+
+删除前面创建的mydb1数据库
+drop database mydb1;
+
+查看服务器中的数据库，并把其中某一个库的字符集修改为gb2312;
+alter database mydb2 character set gb2312;
+show create database mydb2;
+
+备份库
+1、准备库的数据
+create database mydb1;
+use mydb1;
+create table test
+(
+	id int
+);
+insert into test(id) values(1);
+select * from test;
+
+2、备份库
+  2.1 退出mysql客户端:quit
+  2.2 在windows命令行窗口中下执行：mysqldump -uroot -p mydb1>c:\test.sql
+
+3、删除库：drop database mydb1;
+
+4、恢复库(1)：
+	4.1 创建库：create database mydb1;
+	4.2 source c:\test.sql  (通过执行脚本文件实现)
+5、恢复库(2)：mysql -uroot -p mydb1<c:\test.sql  (window命令)
+
+
+创建一个员工表
+use mydb1;  进入库
+create table employee
+(
+	id int,
+	name varchar(20),
+	gender varchar(4),
+	birthday date,
+	entry_date date,
+	job varchar(40),
+	salary double,
+	resume text
+)character set utf8 collate utf8_general_ci;
+
+查看库中所有表
+show tables;
+
+查看表的创建细节
+show create table employee;
+
+查看表的结构
+desc employee;
+
+在上面员工表的基本上增加一个image列。
+alter table employee add image blob;
+
+修改job列，使其长度为60。
+alter table employee modify job varchar(60); 
+
+删除sex列。
+alter table employee drop gender;
+
+表名改为user。
+rename table employee to user;
+
+修改表的字符集为utf-8
+alter table user character set gb2312;
+show create table user;
+
+列名name修改为username
+alter table user change column name username varchar(20);
+
+使用insert语句向表中插入一个员工的信息。
+insert into employee(id,username,birthday,entry_date,job,salary,resume) values(1,'aaa','1980-09-09','1980-09-09','bbb',1000,'bbbbbbbb');
+
+查看插入的数据
+select * from employee;
+
+
+使用insert语句向表中插入一个员工的信息。
+insert into employee(id,username,birthday,entry_date,job,salary,resume) values(2,'小李子','1980-09-09','1980-09-09','bbb',1000,'bbbbbbbb');
+
+插入失败后的解决方案
+show variables like 'chara%';
+set character_set_client=gb2312;
+
+
+显示失败后的解决方案
+set character_set_results=gb2312;
+
+将所有员工薪水修改为5000元。
+update employee set salary=5000;
+
+将姓名为’aaa’的员工薪水修改为3000元。
+update employee set salary=3000 where username='aaa';
+
+将姓名为’aaa’的员工薪水修改为4000元,job改为ccc
+update employee set salary=4000,job='ccc' where username='aaa';
+
+将aaa的薪水在原有基础上增加1000元。
+update employee set salary=salary+1000 where username='aaa';
+
+删除表中名称为’zs’的记录。
+delete from employee where username='小李子';
+
+删除表中所有记录。
+delete from employee;
+
+使用truncate删除表中记录。
+truncate table employee;
+
+查询表中所有学生的信息。
+select id,name,chinese,english,math from student;
+select * from student;
+
+查询表中所有学生的姓名和对应的英语成绩。
+select name,english from student;
+
+过滤表中重复数据。
+select distinct english from student;
+
+在所有学生的英语分数上加10分特长分。
+select name,english+10 from student;
+
+统计每个学生的总分。
+select name,(english+chinese+math) from student;
+
+使用别名表示学生分数。
+select name as 姓名,(english+chinese+math) as 总分 from student;
+select name 姓名,(english+chinese+math) 总分 from student;
+
+查询姓名为王五的学生成绩
+select * from student where name='王五';
+
+查询英语成绩大于90分的同学
+select * from student where english>90;
+
+查询总分大于200分的所有同学
+select * from student where (english+chinese+math)>200;
+
+查询英语分数在 80－90之间的同学。
+select * from student where english>80 and english<90;
+select * from student where english between 80 and 90;
+
+查询数学分数为89,90,91的同学。
+select * from student where math=80 or math=90 or math=91;
+select * from student where math in(80,90,91);
+
+查询所有姓李的学生成绩。
+select * from student where name like '李%';
+
+对数学成绩排序后输出。
+select name,math from student order by math;
+
+对总分排序后输出，然后再按从高到低的顺序输出
+select name from student order by (math+english+chinese) desc;
+
+对姓李的学生成绩排序输出
+select name 姓名,(math+english+chinese) 总分 from student where name like '李%' order by (math+english+chinese) desc;
+
+统计一个班级共有多少学生？
+select count(*) from student;
+select count(name) from student;
+
+统计数学成绩大于90的学生有多少个？
+select count(*) from student where math>90;
+
+统计总分大于250的人数有多少？
+select count(*) from student where (math+english+chinese)>250;
+
+统计一个班级数学总成绩？
+select sum(math) from student;
+
+统计一个班级语文、英语、数学各科的总成绩
+select sum(math),sum(chinese),sum(english) from student;
+
+统计一个班级语文、英语、数学的成绩总和
+select sum(chinese+math+english) from student;
+
+统计一个班级语文成绩平均分
+select sum(chinese)/count(chinese) from student;
+
+求一个班级数学平均分？
+select avg(math) from student;
+
+求一个班级总分平均分
+select avg(chinese+english+math) from student;
+
+求班级最高分和最低分
+select max(chinese+english+math),min(chinese+english+math) from student;
+
+对订单表中商品归类后，显示每一类商品的总价
+select product from orders group by product;
+select product,sum(price) from orders group by product;
+
+查询购买了几类商品，并且每类总价大于100的商品
+select product from orders  group by product having sum(price)>100;
+
+
+定义带有主键约束的表
+create table test1
+(
+	id int primary key,
+	name varchar(20),
+	password varchar(20)
+);
+
+定义一个主键 自动增长的表
+create table test2
+(
+	id int primary key auto_increment,
+	name varchar(20),
+	password varchar(20)
+);
+
+create table test3
+(
+	id int primary key auto_increment,
+	name varchar(20) unique
+);
+
+create table test4
+(
+	id int primary key auto_increment,
+	name varchar(20) unique not null
+);
+
+//什么是外键约束
+
+create table husband
+(
+	id int primary key,
+	name varchar(20)
+);
+
+create table wife
+(
+	id int primary key,
+	name varchar(20),
+	husband_id int,
+	constraint husband_id_FK foreign key(husband_id) references husband(id)
+);
+
+
+//一对多或多对一
+
+create table department
+(
+
+)
+
+create table employee
+(
+
+)
+
+
+//多对多
+
+create table teacher
+(
+	id int primary key,
+	name varchar(20),
+	salary double
+);
+
+create table student
+(
+	id int primary key,
+	name varchar(20)	
+);
+
+
+create table teacher_student
+(
+	teacher_id int,
+	student_id int,
+	primary key(teacher_id,student_id),
+	constraint teacher_id_FK foreign key(teacher_id) references teacher(id),
+	constraint student_id_FK foreign key(student_id) references student(id)	
+);
+
+//一对一
+
+create table person
+(
+	id int primary key,
+	name varchar(20)
+);
+
+create table idcard
+(
+	id int primary key,
+	address varchar(40),
+	constraint id_FK foreign key(id) references person(id)
+);
+
+
+	
+
+
+
+
